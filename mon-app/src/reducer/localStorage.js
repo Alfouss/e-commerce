@@ -12,7 +12,7 @@ export const loadState = () => {
 }
 
 // Save the store and add in my state for get next time 
-// with localstorage in my loadstate
+// with localstorage in my loadstate :)
 export const saveState = async (state) => {
     try{
         let datas = {user: await state.user, product: await state.product};
