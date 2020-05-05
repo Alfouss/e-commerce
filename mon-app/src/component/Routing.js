@@ -11,10 +11,13 @@ class Routing extends React.Component{
         if(params.type === "filter" ){
             return <Accueil params={params}/>         
         }
-        else if(params.type === "article"){
+        else if(params.type === "searcharticle"){
             return <Accueil params={params}/>
         }
         else if(params.type === "sort"){
+            return <Accueil params={params}/>
+        }
+        else if(params.type === "article"){
             return <Accueil params={params}/>
         }
         else{

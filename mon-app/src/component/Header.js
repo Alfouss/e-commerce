@@ -30,7 +30,7 @@ class NavbarMenu extends React.Component{
             
             return(
                 
-                <ListGroup.Item onClick={() => {this.props.history.push(`/article/${value}`); this.setState({listArtcile: []})}} key={index}>{value}</ListGroup.Item>
+                <ListGroup.Item onClick={() => {this.props.history.push(`/searcharticle/${value}`); this.setState({listArtcile: []})}} key={index}>{value}</ListGroup.Item>
             )
 
         });
@@ -78,13 +78,12 @@ class NavbarMenu extends React.Component{
                                 </Form.Group>
                         </Nav>
                         <Nav>
-                            <Nav.Link><Button>Panier</Button></Nav.Link>
+                            <Nav.Link><Button>Cart</Button></Nav.Link>
                         </Nav>
                         <Nav >
                             { localStorage.getItem("user") === null &&
                             <div>
-                                <Link to="/signin"><Button>login</Button></Link>
-                                <Link to="/register"><Button>register</Button></Link>
+                                <Link to="/signin"><Button>Login</Button></Link>
                             </div>
                                 
                             }

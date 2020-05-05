@@ -1,6 +1,8 @@
 import React from "react"
 import {connect} from "react-redux"
 
+
+
 class SearchArtcile extends React.Component{
     constructor(){
         super();

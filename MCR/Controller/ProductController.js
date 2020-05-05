@@ -11,6 +11,7 @@ exports.read = (req, res) => {
 exports.create = (req, res) => {
     let productAdd = new Product({
         article: req.body.article,
+        describe: req.body.describe,
         price: req.body.price,
         quantity: req.body.quantity,
         photo: req.body.photo,
@@ -34,6 +35,7 @@ exports.update = (req, res) => {
     Product.findOneAndUpdate({_id:req.body.id},{$set:
         {
             article: req.body.article,
+            describe: req.body.describe,
             price: req.body.price,
             quantity: req.body.quantity,  
             photo: req.body.photo,

@@ -8,6 +8,7 @@ import Filter from "./Filter";
 import {ListCard} from "./ListCard";
 
 
+
 class Accueil extends React.Component {
     constructor(props) {
         super(props);
@@ -41,7 +42,6 @@ class Accueil extends React.Component {
                     <Row>
                         <Col xs="2" sm="2" md="3" lg="2" className="border border-secondary mt-3 ml-3"><Filter/></Col>
                         <Col><div className="flex">{this.state.displayArticle}</div></Col>
-
                     </Row>
                 </Container>
             </div>

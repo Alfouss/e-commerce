@@ -1,7 +1,10 @@
 import * as actionType from "../actions/actionType";
 import { combineReducers } from "redux";
+import {allDataProducts}  from  "../services/serviceProduct";
+import {allDataUsers}  from  "../services/serviceUser";
 
-const reducer_user = async (state = {}, action) => {
+
+const reducer_user = async (state = allDataUsers(), action) => {
     let newState;
     switch(action.type){
         case actionType.SHOW_USER:
@@ -12,7 +15,7 @@ const reducer_user = async (state = {}, action) => {
     }
 }
 
-const reducer_product = async (state = {}, action) => {
+const reducer_product = async (state = allDataProducts(), action) => {
     let newState;
     switch(action.type){
         case actionType.SHOW_PRODUCT:

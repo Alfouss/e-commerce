@@ -31,7 +31,7 @@ class Filter extends React.Component {
         //Use loops for check the duplicate
          for(var z = 0; z < data.length; z++){
             for(var i = 0; i < data.length; i++){
-                //check if the category in the new array, ain't undefined
+                //check if the category in the new array, and nor undefined
                 if(data[z].category !== arrayCheckIfExist[i] && data[z].category !== undefined  && count === 0){
                     arrayCheckIfExist.push(data[z].category);
                 }
@@ -42,7 +42,6 @@ class Filter extends React.Component {
         
         //loop category for card 
        let list =  arrayCheckIfExist.map((category, index) =>{
-           console.log(category);
             return (
                 <ListGroup.Item action onClick={() => {this.activeCategory(category);}} key={index}> {category}</ListGroup.Item>
             );

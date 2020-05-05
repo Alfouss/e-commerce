@@ -31,6 +31,7 @@ class Product extends React.Component{
                 <tr key={index}>
                     <td>{value._id}</td>
                     <td>{value.article}</td>
+                    <td>{value.describe}</td>
                     <td>{value.price}</td>
                     <td>{value.quantity}</td>
                     <td>{value.photo}</td>
@@ -63,6 +64,7 @@ class Product extends React.Component{
                         <form onSubmit={this.updateProduct}>
                             <label>id: <input name="id" type="text" placeholder={value._id} defaultValue={value._id}/></label>
                             <label>article: <input name="article" type="text" placeholder={value.article} defaultValue={value.article}/></label>
+                            <label>describe: <input name="describe" type="number" placeholder={value.describe} defaultValue={value.describe}/></label>
                             <label>price: <input name="price" type="number" placeholder={value.price} defaultValue={value.price}/></label>
                             <label>quantity: <input name="quantity" type="number" placeholder={value.quantity} defaultValue={value.quantity}/></label>
                             <label>photo: 
@@ -92,6 +94,7 @@ class Product extends React.Component{
             var obj = this.state.data[i];
             if(tab.indexOf(obj._id) !== -1){
                 obj.article = e.target.article.value;
+                obj.describe = e.target.describe.value;
                 obj.price = e.target.price.value;
                 obj.quantity = e.target.quantity.value;
                 obj.photo = e.target.photo.value;
@@ -130,6 +133,8 @@ class Product extends React.Component{
                     <Form.Group>
                         <Form.Label>Article</Form.Label>
                         <Form.Control type="text" name="article" placeholder="Enter article" />
+                        <Form.Label>Describe</Form.Label>
+                        <Form.Control type="text" name="describe" placeholder="Enter describe" />
                         <Form.Label>Price</Form.Label>
                         <Form.Control type="text" name="price" placeholder="Enter price" />
                         <Form.Label>Quantity</Form.Label>
@@ -154,6 +159,7 @@ class Product extends React.Component{
                         <tr>
                             <th>Id</th>
                             <th>article</th>
+                            <th>describe</th>
                             <th>price</th>
                             <th>quantity</th>
                             <th>photo</th>

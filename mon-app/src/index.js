@@ -7,6 +7,7 @@ import {Provider} from "react-redux"
 import * as serviceWorker from './serviceWorker';
 import userApp from "./reducer/reducers"
 import {loadState, saveState} from "../src/reducer/localStorage"
+import { BrowserRouter as Router} from "react-router-dom";
 
 const persistedState = loadState();
 const store = createStore(userApp, persistedState);
@@ -18,7 +19,9 @@ store.subscribe(async () => {
 
 ReactDOM.render(
 <Provider store={store}>
+  <Router>
     <App />
+  </Router>
 </Provider>
 , 
 document.getElementById('root'));

@@ -1,8 +1,9 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Container, Row, Button, Col, Form} from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import Admin from './Admin';
-import{connect} from "react-redux"
+import{connect} from "react-redux";
 import { showUser, showProduct } from '../actions/actions';
 import { bindActionCreators } from 'redux';
 import * as serviceUser from "../services/serviceUser";
@@ -56,6 +57,10 @@ class Register extends React.Component {
     
 
     async connect(e){
+        console.log(/^\w{8,12}/.test(e.target.password.value))
+        if(/^\w+(\.\w{8,12})+$/.test(e.target.password.value)){
+            alert("toto")
+        }
         e.preventDefault();
         if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(e.target.mail.value))
         {
@@ -76,7 +81,7 @@ class Register extends React.Component {
       <div> 
           {this.state.page === "register" && localStorage.getItem("user") === null &&
             <Col>
-                <Form onSubmit={this.sendForm}>
+                <Form className="mb-3" onSubmit={this.sendForm}>
                     <Form.Group>
                         <Form.Label>Email</Form.Label>
                         <Form.Control type="text" name="mail" ref="mail" placeholder="Enter email" />
@@ -88,12 +93,13 @@ class Register extends React.Component {
                     <Button type="submit">Envoyer</Button>
                 </Form>
                 <Button type="button" onClick={() => { this.setState({page: "signin"})}}>Login</Button>
+                <Link to="/"><Button>Accueil</Button></Link>
             </Col>
           }
 
           {this.state.page === "signin" && localStorage.getItem("user") === null && 
                 <Col>
-                    <Form onSubmit={this.connect}>
+                    <Form className="mb-3" onSubmit={this.connect}>
                         <Form.Group controlId="form">
                             <Form.Label>Email</Form.Label>
                             <Form.Control type="text" name="mail" ref="mail" placeholder="Enter email" />
@@ -103,6 +109,7 @@ class Register extends React.Component {
                         <Button type="submit">Envoyer</Button>
                     </Form>
                     <Button type="button"  onClick={() => { this.setState({page: "register"})}}>Register</Button>
+                    <Link to="/"><Button>Accueil</Button></Link>
                 </Col>
             }
             

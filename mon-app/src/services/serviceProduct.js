@@ -22,6 +22,7 @@ export const addArticle = async (e) => {
         let namePic = pictureGet(e);
         let data = {
             article: e.target.article.value,
+            describe: e.target.describe.value,
             price: e.target.price.value,
             quantity: e.target.quantity.value,
             photo: namePic,
@@ -38,6 +39,7 @@ export const updateProduct = async (e) => {
     let data = {
         id: e.target.id.value,
         article: e.target.article.value,
+        describe: e.target.describe.value,
         price: e.target.price.value,
         quantity: e.target.quantity.value,
         photo: namePic,
@@ -46,7 +48,7 @@ export const updateProduct = async (e) => {
     await axios.put("http://localhost:1234/product/update", data);
 }
 
-
+//data is id of products
 export const deleteProduct = async (data) => {
     await axios.delete("http://localhost:1234/product/delete", {data});
 }
