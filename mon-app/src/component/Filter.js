@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, ListGroup } from "react-bootstrap"
+import { Form, ListGroup, Navbar } from "react-bootstrap"
 import {connect} from "react-redux";
 import {withRouter} from "react-router-dom";
 
@@ -76,10 +76,13 @@ class Filter extends React.Component {
                     </Form.Control>
                 </Form.Group>
             </Form>
-            <ListGroup>
-                <ListGroup.Item action onClick={() => {this.activeCategory('all');}}> Tout</ListGroup.Item>
-                {this.state.list}
-            </ListGroup>
+            
+                <ListGroup>
+
+                    <ListGroup.Item action onClick={() => {this.activeCategory('all');}}> Tout</ListGroup.Item>
+                    {this.state.list}
+                </ListGroup>
+            
           </div>
         )
     }

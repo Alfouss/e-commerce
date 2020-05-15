@@ -6,6 +6,7 @@ export const allDataProducts = async () => {
 };
 
 let pictureGet = (e) => {
+    
     if(e.target.photo.type === 'file'){
         
         if(e.target.photo.files[0] !== undefined){
@@ -13,7 +14,10 @@ let pictureGet = (e) => {
         }
     }
     if(e.target.photo.type === 'text'){
-            return e.target.photo.name.value;
+        let path = e.target.photo.value;
+        let nameImg = path.split('\\');
+        console.log(nameImg[2])
+            return nameImg[2];
     }
 }
 

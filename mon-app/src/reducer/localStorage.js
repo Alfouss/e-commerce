@@ -15,7 +15,7 @@ export const loadState = () => {
 // with localstorage in my loadstate :)
 export const saveState = async (state) => {
     try{
-        let datas = {user: await state.user, product: await state.product};
+        let datas = {user: await state.user, product: await state.product, cart: await state.cart};
         const serializedState = JSON.stringify(datas);
         localStorage.setItem('state', serializedState)
         

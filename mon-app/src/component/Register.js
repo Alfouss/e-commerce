@@ -57,10 +57,10 @@ class Register extends React.Component {
     
 
     async connect(e){
-        console.log(/^\w{8,12}/.test(e.target.password.value))
-        if(/^\w+(\.\w{8,12})+$/.test(e.target.password.value)){
-            alert("toto")
-        }
+        // console.log(/^\w{8,12}/.test(e.target.password.value))
+        // if(/^\w+(\.\w{8,12})+$/.test(e.target.password.value)){
+        //     alert("toto")
+        // }
         e.preventDefault();
         if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(e.target.mail.value))
         {
