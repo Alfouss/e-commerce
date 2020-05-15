@@ -1,125 +1,212 @@
-import React from "react";
+import React  from "react";
 import {Card, Button, Container, Row, Col} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { addProductInCart } from "../actions/actions";
+import {connect} from "react-redux";
+ 
+class ListCard extends React.Component{
+    constructor(props){
+        super(props)
+        this.state = {
+            list: [],
+            params: this.props.params,
+        }
+        this.addCart = this.addCart.bind(this);
+    }
 
+    async componentDidMount(){
+        this.list(await this.props.products, this.props.params)
+    }
 
-
-
-export const ListCard = async (data, endPoint) => {  
-    let list;
-    switch(endPoint.type){
-        case "all":
-            list = displayAll(data, endPoint)
-        break;
-        case "filter":
-            list = displayByCategory(data, endPoint)
-        break;
-        case "searcharticle":
-            list = displayByArticlesSearch(data, endPoint)
-        break;
-        case "sort":
-            list = displayBySort(data, endPoint)
-        break;
-        case "article":
-            list = displayOneArticle(data, endPoint)
-        break;
-        default:
-        return null
+    async componentWillReceiveProps(nextProps){
+        this.list(await this.props.products, nextProps.params)
 
     }
-    return list;
-}
 
-function cardProduct(value, index){
-    return (
-        <Card className="border border-secondary mt-3 mr-3" key={index} style={{ width: '13em' }}>
-            <Card.Img variant="pic" src={window.location.origin + "/img/" + value.photo}  style={{ width: "auto", height: "200px" }}/>
-            <Card.Body>
-                <Link  to={"/article/"+value._id} className="p-0 text-dark">{value.article}</Link>
-                <Card.Text>{value.price}$</Card.Text>
-                <Card.Text>description: {value.describe}</Card.Text>
-                <Button variant="primary">Add cart</Button>
-            </Card.Body>
-        </Card>
-    )  
-}
-
-function describeProduct(value, index){
-    return (
-        <Container className="border border-secondary mt-3 mr-3" key={index} >
-            <Col></Col>
-            <Row>
-                <Col lg={4}><img src={window.location.origin + "/img/" + value.photo} style={{ width: '15em' }}/></Col>
-                <Col>
-                    <Row>
-                        <Col lg={12}><p>{value.article}</p></Col>
-                        <Col lg={12}><p>{value.describe}</p></Col>
-                        <Col>                
-                            <Button variant="primary">Add cart</Button>
-                        </Col>
-                    </Row>
-                </Col>
-            </Row>
-        </Container>
-
-    )  
-}
-
-async function displayAll(data, endPoint){
-    let list = await data.map((value, index) => {
-    if(endPoint.category === (undefined || "all")){
-        return cardProduct(value, index);    
+    async list(data, endPoint){  
+        let list;
+        switch(endPoint.type){
+            case "all":
+                list = this.displayAll(data, endPoint)
+            break;
+            case "filter":
+                list = this.displayByCategory(data, endPoint)
+            break;
+            case "searcharticle":
+                list = this.displayByArticlesSearch(data, endPoint)
+            break;
+            case "sort":
+                list = this.displayBySort(data, endPoint)
+            break;
+            case "article":
+                list = this.displayOneArticle(data, endPoint)
+            break;
+            case "cart":
+                list = this.displayCart(data)
+            break;
+            default:
+            return null
+    
         }
-    });
-    return list;
-}
-
-async function displayByCategory(data, endPoint){
-    let list = await data.map((value, index) => {
+        this.setState({list: await list})
+    }
+    
+    
+    CardProduct (value, index) {
+        return (
+            <Col md={4} lg={4}>
+                <Card className="border border-secondary mt-3 mr-3" key={index} style={{ width: '13em' }}>
+                    <Card.Img variant="pic" src={window.location.origin + "/img/" + value.photo}  style={{ width: "auto", height: "200px" }}/>
+                    <Card.Body>
+                        <Link  to={"/article/"+value._id} className="p-0 text-dark">{value.article}</Link>
+                        <Card.Text>{value.price}$</Card.Text>
+                        <Card.Text>description: {value.describe}</Card.Text>
+                        <Button onClick={() => {this.addCart(value)}} variant="primary">Add cart</Button>
+                        
+                    </Card.Body>
+                </Card>
+            </Col>
+            
+        )  
+    }
+    
+    describeProduct(value, index){
+        return (
+            <Container className="border border-secondary mt-3 mr-3" key={index} >
+                <Row>
+                    <Col lg={4}><img src={window.location.origin + "/img/" + value.photo} style={{ width: '15em' }}/></Col>
+                    <Col>
+                        <Row>
+                            <Col lg={12}><p>{value.article}</p></Col>
+                            <Col lg={12}><p>{value.describe}</p></Col>
+                            <Col>                
+                                <Button  variant="primary">Add cart</Button>
+                            </Col>
+                        </Row>
+                    </Col>
+                </Row>
+            </Container>
+    
+        )  
+    }
+    
+    async displayAll(data, endPoint){
+        let list = await data.map((value, index) => {
+        if(endPoint.category === (undefined || "all")){
+            return this.CardProduct(value, index);    
+            }
+        });
+        return list;
+    }
+    
+    async displayByCategory(data, endPoint){
+        let list = await data.map((value, index) => {
+            
+                if(endPoint.category === value.category){
+                    return this.CardProduct(value, index);     
+                }
+                else if(endPoint.category === "all"){
+                    return this.CardProduct(value, index);     
+                }
+            });
+    
+            return list
+    }
+    
+    async displayByArticlesSearch(data, endPoint){
+        let list = await data.map((value, index) => {
+                if(endPoint.category === value.article.toLowerCase()){
+                    return this.CardProduct(value, index);     
+                }
+            });
+    
+            return list;
+    }
+    
+    async displayBySort(data, endPoint){
+        let dataSort;
+        let list;
+            dataSort = await data;
+            let sort = await data.sort((a, b) =>  a.price - b.price );
+    
+            if(endPoint.category === "low" ) {dataSort = sort} 
+            else if(endPoint.category === "high") {dataSort = sort.reverse()}
         
-            if(endPoint.category === value.category){
-                return cardProduct(value, index);     
-            }
-            else if(endPoint.category === "all"){
-                return cardProduct(value, index);     
-            }
-        });
-
+             list = await dataSort.map((value, index) => {
+                return this.CardProduct(value, index);  
+            });
+        
+    
         return list
-}
-
-async function displayByArticlesSearch(data, endPoint){
-    let list = await data.map((value, index) => {
-            if(endPoint.category === value.article.toLowerCase()){
-                return cardProduct(value, index);     
-            }
-        });
-
-        return list;
-}
-
-async function displayBySort(data, endPoint){
-    let dataSort;
-    let list;
-        dataSort = await data;
-        let sort = await data.sort((a, b) =>  a.price - b.price );
-
-        if(endPoint.category === "low" ) {dataSort = sort} 
-        else if(endPoint.category === "high") {dataSort = sort.reverse()}
+    }
     
-         list = await dataSort.map((value, index) => {
-            return cardProduct(value, index);  
-        });
+    async displayOneArticle(data, endPoint){
+        let list = await data.map((value, index) => {
+                if(endPoint.category === value._id){
+                    return this.describeProduct(value, index);     
+                }
+            });
+            return list;
+    }
     
+    async displayCart(data){
+        let list = await data.map((value, index) => {
+                    return this.describeProduct(value, index);     
+                
+            });
+            return list;
+    }
 
-    return list
+    async addCart(value){
+        let arrayCart = await this.props.cart;
+        console.log(arrayCart)
+        arrayCart.push({_id: value._id, article: value.article, price: value.price, quantity: 0});
+
+        this.props.actions(this.checkIfExist(arrayCart))
+    }
+
+    checkIfExist(arrayCart){
+        let newArray = arrayCart;
+
+        for( var i = 0 ;i < arrayCart.length; i++){
+                if (arrayCart[i]._id === arrayCart[arrayCart.length - 1]._id && newArray[i].quantity > 0){
+                    
+                    newArray[i].quantity += 1;
+                    newArray.splice((arrayCart.length - 1), 1);
+                    return newArray;
+                }
+
+                if ( arrayCart[i]._id === arrayCart[arrayCart.length - 1]._id && newArray[arrayCart.length - 1].quantity === 0){
+            
+                    newArray[i].quantity += 1;
+                    return newArray;
+
+                }
+        }
+        return newArray;
+    }
+
+    render(){
+        return (
+            
+            <Row>{this.state.list}</Row>
+        )
+    }
+    
 }
 
-async function displayOneArticle(data, endPoint){
-    let list = await data.map((value, index) => {
-            if(endPoint.category === value._id){
-                return describeProduct(value, index);     
-            }
-        });
-        return list;
-}
+function mapStateToProps(state){
+    return {
+      products: state.product,
+      cart: state.cart,
+
+    };
+  }
+
+
+function mapDispatchToProps(dispatch) {
+    return { actions: (data) => {dispatch(addProductInCart(data))} }
+  }
+
+// export default Cart;
+export default connect(mapStateToProps, mapDispatchToProps)(ListCard)

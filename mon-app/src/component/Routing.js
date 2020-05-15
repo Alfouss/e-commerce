@@ -1,5 +1,6 @@
 import React from "react";
 import Accueil from "./Accueil";
+import Cart from "./Cart";
 import {withRouter} from "react-router-dom";
 
 
@@ -7,7 +8,9 @@ import {withRouter} from "react-router-dom";
 
 class Routing extends React.Component{  
     routeToComponent(){
+        
         const params = this.props.match.params;
+        console.log(params)
         if(params.type === "filter" ){
             return <Accueil params={params}/>         
         }
@@ -19,6 +22,9 @@ class Routing extends React.Component{
         }
         else if(params.type === "article"){
             return <Accueil params={params}/>
+        }
+        else if(params.type === "cart"){
+            return <Cart params={params}/>
         }
         else{
             return <Accueil params={{category:"all", type:"all"}}/>

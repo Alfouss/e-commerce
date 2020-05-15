@@ -114,7 +114,7 @@ class User extends React.Component{
 
 function mapStateToProps(state){
     return {
-      users: state.user,
+      users: state.user
     };
   }
 

@@ -1,8 +1,7 @@
 import React from "react";
-import {Navbar, Nav, Button, Form, ListGroup} from 'react-bootstrap';
-import {Link} from "react-router-dom";
+import { Navbar, Nav, Button, Form, ListGroup } from 'react-bootstrap';
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
-import {withRouter} from "react-router-dom";
 
 
 class NavbarMenu extends React.Component{
@@ -60,8 +59,8 @@ class NavbarMenu extends React.Component{
 
     render(){
         return(
-                <Navbar collapseOnSelect className="pl-5" expand="lg" expand="md" bg="dark" variant="dark">
-                    <Navbar.Brand className="ml-1" href="/">Fou Market</Navbar.Brand>
+                <Navbar collapseOnSelect expand="lg" expand="md" bg="dark" variant="dark">
+                    <Link to="/"><Navbar.Brand className="ml-1">Fou Market</Navbar.Brand></Link>
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">
                         {/* <Nav className="mr-auto" /> */}
@@ -77,8 +76,12 @@ class NavbarMenu extends React.Component{
                                     </Form.Row>
                                 </Form.Group>
                         </Nav>
-                        <Nav>
-                            <Nav.Link><Button>Cart</Button></Nav.Link>
+                        <Nav className="m-2">
+                            <Link to="/cart" >
+                                <svg class="bi bi-bag-fill" width="2em" height="2em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <   path d="M1 4h14v10a2 2 0 01-2 2H3a2 2 0 01-2-2V4zm7-2.5A2.5 2.5 0 005.5 4h-1a3.5 3.5 0 117 0h-1A2.5 2.5 0 008 1.5z"/>
+                                </svg>
+                            </Link>
                         </Nav>
                         <Nav >
                             { localStorage.getItem("user") === null &&

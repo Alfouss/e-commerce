@@ -10,8 +10,9 @@ function App() {
         <Switch>
           <Route exact path="/" component={Routing}/>
           <Route exact path="/:type/:category" component={Routing}/>
-          <Route path="/register"><Register path={{pathname:"register"}}/></Route>/>
-          <Route path="/signin"><Register path={{pathname:"signin"}}/></Route>/>
+          <Route exact path="/register"><Register path={{pathname:"register"}}/></Route>/>
+          <Route exact path="/signin"><Register path={{pathname:"signin"}}/></Route>/>
+          <Route exact path="/:type" component={Routing}/>
         </Switch>
     </Container>
     
