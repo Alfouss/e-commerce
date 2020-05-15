@@ -58,20 +58,22 @@ class Product extends React.Component{
     //update article in the service who will comunnicate with nodejs
     async updateListArticle(){
         let listUpdate = await this.state.data.map((value, index) => {
+            console.log(value.photo)
             return(
                 <tr key={index}>
                     <td>
                         <form onSubmit={this.updateProduct}>
                             <label>id: <input name="id" type="text" placeholder={value._id} defaultValue={value._id}/></label>
                             <label>article: <input name="article" type="text" placeholder={value.article} defaultValue={value.article}/></label>
-                            <label>describe: <input name="describe" type="number" placeholder={value.describe} defaultValue={value.describe}/></label>
+                            <label>describe: <input name="describe" type="text" placeholder={value.describe} defaultValue={value.describe}/></label>
                             <label>price: <input name="price" type="number" placeholder={value.price} defaultValue={value.price}/></label>
                             <label>quantity: <input name="quantity" type="number" placeholder={value.quantity} defaultValue={value.quantity}/></label>
                             <label>photo: 
-                                { value.category !== null || undefined  ?
-                                    <input name="photo" type="file"/>
-                                :
+                                { value.photo !== null || undefined  ?
                                     <input name="photo" type="text" defaultValue={value.photo}/>
+                                :
+                                    <input name="photo" type="file"/>
+
                                 }
                             </label>
                             <label>category: <input name="category" type="text" defaultValue={value.category}/></label>
