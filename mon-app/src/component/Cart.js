@@ -3,7 +3,6 @@ import {connect} from "react-redux";
 import { deleteArticleFromCart } from '../actions/actions';
 import { Container, Card, Button,  Row, Col, Form, Navbar} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import CardPayment from "./Card"
 
 
 class User extends React.Component{
@@ -22,11 +21,12 @@ class User extends React.Component{
     }
 
     async listCart(){
-        console.log(await this.state.cart);
         let cart = await this.state.cart;
         let totalPrice = 0;
         let list = cart.map((value, index) => {
             totalPrice += value.quantity * value.price
+            console.log(value);
+            console.log(window.location.origin);
             return(
                 <Col key={index} sm={5} md={3} lg={3}>
                     <Card className="border border-secondary mt-3 mr-3"  style={{ width: '13em' }}>
@@ -42,15 +42,20 @@ class User extends React.Component{
                 </Col>
             )
        });
-       console.log(totalPrice)
        this.setState({list: list, totalPrice: totalPrice})
 
     }
         
     async deleteArticleInCart(index){
         let newCart = await this.state.cart;
+        
+       
         newCart.splice(index, 1)
+        
+       
         this.props.deleteArticle(newCart);
+        this.listCart()
+        this.setState({cart: newCart})
     }
     
     render(){
@@ -72,7 +77,7 @@ class User extends React.Component{
                     </Col>
                     <Col >
                         <p variant="primary">Total price: {this.state.totalPrice}</p>
-                        <Button variant="primary">Check cart</Button>
+                        <Button variant="primary">Pay</Button>
                     </Col>
                 </Row>
                 

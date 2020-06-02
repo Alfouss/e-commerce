@@ -5,19 +5,28 @@ export const allDataProducts = async () => {
     return products;
 };
 
-let pictureGet = (e) => {
+export const pictureGet = (e) => {
     
     if(e.target.photo.type === 'file'){
         
         if(e.target.photo.files[0] !== undefined){
+            console.log(e.target.photo.files[0].name)
             return e.target.photo.files[0].name;
         }
     }
     if(e.target.photo.type === 'text'){
         let path = e.target.photo.value;
         let nameImg = path.split('\\');
-        console.log(nameImg[2])
-            return nameImg[2];
+
+        // if input not change
+        if(nameImg.length === 1){
+            
+            return nameImg[0];
+        }
+
+        //Split the path of image
+        return nameImg[2];
+        
     }
 }
 

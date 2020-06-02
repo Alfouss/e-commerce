@@ -2,15 +2,24 @@ import React from 'react';
 import Product from './Product';
 import User from './User';
 import { Navbar, Button, Nav  } from 'react-bootstrap';
+import { withRouter } from 'react-router-dom'
 
 
 class Admin extends React.Component{
     constructor(props){
         super(props);
-
+        console.log(this.props.test)
         this.state = {
             buttonModify: false // for choice the type of panel user or product
         }
+        this.deconnect = this.deconnect.bind(this);
+
+    }
+    
+    deconnect(){
+        localStorage.clear("user");
+        this.props.history.push("/")
+
     }
 
     render(){
@@ -24,7 +33,7 @@ class Admin extends React.Component{
                             <Nav className="mr-auto"></Nav>
                             <Nav>
                                 <Button onClick={() => this.setState({buttonModify:false})}>Panel products</Button>
-                                <Button onClick={() => {localStorage.clear();window.location.reload();}}>Deconnect</Button>
+                                <Button onClick={this.deconnect}>Deconnect</Button>
                             </Nav>
                         </Navbar>
                         <User/>
@@ -37,7 +46,7 @@ class Admin extends React.Component{
                         <Nav className="mr-auto"></Nav>
                         <Nav>
                             <Button onClick={() => this.setState({buttonModify:true})}>Panel users</Button>
-                            <Button onClick={() => {localStorage.clear();window.location.reload();}}>Deconnect</Button>
+                            <Button onClick={this.deconnect}>Deconnect</Button>
                         </Nav>
                     </Navbar>
                     <Product/>
@@ -49,4 +58,4 @@ class Admin extends React.Component{
     }
 }
 
-export default Admin;
+export default withRouter(Admin);
