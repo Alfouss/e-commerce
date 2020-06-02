@@ -27,15 +27,23 @@ class Filter extends React.Component {
         let arrayCheckIfExist = [];
         let count = 0;
         let data = await this.state.data;
-        
+
+        for(var l = 0; l < data.length; l++){
+            arrayCheckIfExist.push(data[l].category)
+        }
+
         //Use loops for check the duplicate
          for(var z = 0; z < data.length; z++){
-            for(var i = 0; i < data.length; i++){
-                //check if the category in the new array, and nor undefined
-                if(data[z].category !== arrayCheckIfExist[i] && data[z].category !== undefined  && count === 0){
-                    arrayCheckIfExist.push(data[z].category);
-                }
-                count++
+            for(var i = 0; i <arrayCheckIfExist.length; i++){
+                if(data[z].category === arrayCheckIfExist[i]){
+                    if(data[z].category !== undefined  && count >= 1){
+                            arrayCheckIfExist.splice(i,1);
+                    }
+                    count++
+                    }
+                    
+
+                
             }
             count = 0
         }

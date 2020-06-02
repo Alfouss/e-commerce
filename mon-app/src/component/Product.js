@@ -58,7 +58,7 @@ class Product extends React.Component{
     //update article in the service who will comunnicate with nodejs
     async updateListArticle(){
         let listUpdate = await this.state.data.map((value, index) => {
-            console.log(value.photo)
+        
             return(
                 <tr key={index}>
                     <td>
@@ -69,7 +69,7 @@ class Product extends React.Component{
                             <label>price: <input name="price" type="number" placeholder={value.price} defaultValue={value.price}/></label>
                             <label>quantity: <input name="quantity" type="number" placeholder={value.quantity} defaultValue={value.quantity}/></label>
                             <label>photo: 
-                                { value.photo !== null || undefined  ?
+                                { value.photo !== null || undefined || "" ?
                                     <input name="photo" type="text" defaultValue={value.photo}/>
                                 :
                                     <input name="photo" type="file"/>
@@ -99,10 +99,11 @@ class Product extends React.Component{
                 obj.describe = e.target.describe.value;
                 obj.price = e.target.price.value;
                 obj.quantity = e.target.quantity.value;
-                obj.photo = e.target.photo.value;
+                obj.photo = serviceProduct.pictureGet(e);
                 obj.category = e.target.category.value;
             }         
         }
+        serviceProduct.updateProduct(e)
         this.listArtcile();
     }
     

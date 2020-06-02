@@ -3,9 +3,11 @@ import { combineReducers } from "redux";
 import {allDataProducts}  from  "../services/serviceProduct";
 import {allDataUsers}  from  "../services/serviceUser";
 
+
 // Switch user 
-const reducer_user = async (state = allDataUsers(), action) => {
+const reducer_user = async (state = [], action) => {
     let newState;
+    state  = await allDataUsers();
     switch(action.type){
         case actionType.SHOW_USER:
             newState = action.data;
@@ -16,8 +18,11 @@ const reducer_user = async (state = allDataUsers(), action) => {
 }
 
 //Switch product
-const reducer_product = async (state = allDataProducts(), action) => {
+const reducer_product = async (state = [], action) => {
     let newState;
+    state = await allDataProducts();
+    state = state.data;
+
     switch(action.type){
         case actionType.SHOW_PRODUCT:
             newState = action.data;
@@ -42,6 +47,7 @@ const reducer_cart = async (state = [], action) => {
         return state;
     }
 }
+
 
 
 const userApp = combineReducers({

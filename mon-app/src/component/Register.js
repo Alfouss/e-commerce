@@ -23,7 +23,8 @@ class Register extends React.Component {
             mail:"",
             password:"",
             datasUsers: [],
-            check:""
+            check:"",
+            admin:false
 
         }
     }
@@ -31,7 +32,6 @@ class Register extends React.Component {
     async componentDidMount(){
         let Users = await serviceUser.allDataUsers();
         let Products = await serviceProduct.allDataProducts();
-        
         this.props.dispatch(showUser(Users.data));
         this.props.dispatch(showProduct(Products.data));
             
@@ -39,39 +39,60 @@ class Register extends React.Component {
         
     }
 
-   async sendForm(e){
-    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(e.target.mail.value))
-    {
-        serviceUser.createUser(e);
-        this.setState({page: "login", 
-                     mail: e.target.mail.value, 
-                     password: e.target.password.value});
-        alert("Created");
-        window.location.reload();
-    }else{
-        alert("Veuillez entrer une adress valide")
+    checkPattern(type ,value){
+        if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value) && type === "mail") return true
+        if (/^\w{8,12}$/.test(value) && type === "password") return true
+        return false
     }
+
+   async sendForm(e){
+        if (this.checkPattern("mail", e.target.mail.value))
+        {
+            if(this.checkPattern("password", e.target.password.value)){
+                serviceUser.createUser(e);
+            this.setState({page: "login", 
+                        mail: e.target.mail.value, 
+                        password: e.target.password.value});
+            alert("Created");
+            window.location.reload();
+            }else{
+                alert("Password short or no valid")
+            }
+        }else{
+            alert("Adress not valid.Please can you enter a valid adress")
+        }
        
     }
 
     
 
     async connect(e){
-        // console.log(/^\w{8,12}/.test(e.target.password.value))
-        // if(/^\w+(\.\w{8,12})+$/.test(e.target.password.value)){
-        //     alert("toto")
-        // }
+
+        
+
         e.preventDefault();
-        if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(e.target.mail.value))
-        {
-            let email = e.target.mail.value;
-            let getUser = await serviceUser.checkUser(e);
-            this.setState({page: null, check: getUser});
-            if(email !== "admin@admin.com"){
-                this.props.history.push("/")
+            if (this.checkPattern("mail", e.target.mail.value))
+            {
+                if(this.checkPattern("password", e.target.password.value)){
+                    let getUser = await serviceUser.checkUser(e);
+                    this.setState({page: null, check: getUser});
+                    if(getUser !== "admin@admin.com"){
+                        localStorage.setItem("user", getUser)
+                        this.setState({admin: false})
+                        this.props.history.push("/")
+                }
+                else{ 
+                    localStorage.setItem("user", getUser)
+                    this.props.history.push("/admin")
+
             }
+
+            }else{
+                alert("Wrong password")
+            }
+            
         }else{
-            alert("veuillew entrez une adresse valide ")
+            alert("veuillez entrez une adresse valide ")
         }
         
     }
@@ -104,7 +125,7 @@ class Register extends React.Component {
                             <Form.Label>Email</Form.Label>
                             <Form.Control type="text" name="mail" ref="mail" placeholder="Enter email" />
                             <Form.Label>Password</Form.Label>
-                            <Form.Control type="password" name="password" ref="password" placeholder="Enter pass" />
+                            <Form.Control  type="password" name="password" ref="password" placeholder="Enter pass" />
                         </Form.Group>
                         <Button type="submit">Envoyer</Button>
                     </Form>
@@ -113,11 +134,6 @@ class Register extends React.Component {
                 </Col>
             }
             
-            {localStorage.getItem("user") === "admin@admin.com" && 
-                <Col>
-                    <Admin/>
-                </Col>
-            }
         </div>)
         
     }

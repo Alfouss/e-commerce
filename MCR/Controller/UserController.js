@@ -55,7 +55,6 @@ exports.verify = (req, res) => {
         let verifyVal;
         userData.map((value) => {
             verifyVal = hashFunc(req.body.password, value.password);
-            console.log(verifyVal);
             if(req.body.mail === value.mail && verifyVal === true){
                 res.json(req.body.mail);
             }

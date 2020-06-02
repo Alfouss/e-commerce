@@ -54,9 +54,9 @@ class ListCard extends React.Component{
     
     CardProduct (value, index) {
         return (
-            <Col md={4} lg={4}>
-                <Card className="border border-secondary mt-3 mr-3" key={index} style={{ width: '13em' }}>
-                    <Card.Img variant="pic" src={window.location.origin + "/img/" + value.photo}  style={{ width: "auto", height: "200px" }}/>
+            <Col md={4} lg={3} key={index} >
+                <Card className="border border-secondary mt-3 mr-3" style={{ width: '100%', height: "30em" }}>
+                    <Card.Img variant="pic" src={window.location.origin + "/img/" + value.photo}  style={{ width: "auto", height: "16em" }}/>
                     <Card.Body>
                         <Link  to={"/article/"+value._id} className="p-0 text-dark">{value.article}</Link>
                         <Card.Text>{value.price}$</Card.Text>
@@ -72,13 +72,13 @@ class ListCard extends React.Component{
     
     describeProduct(value, index){
         return (
-            <Container className="border border-secondary mt-3 mr-3" key={index} >
+            <Container fluid className="border border-secondary mt-3 mx-4" key={index} >
                 <Row>
-                    <Col lg={4}><img src={window.location.origin + "/img/" + value.photo} style={{ width: '15em' }}/></Col>
+                    <Col lg={4}><img src={window.location.origin + "/img/" + value.photo} style={{ width: '25em', height: "20em" }}/></Col>
                     <Col>
                         <Row>
                             <Col lg={12}><p>{value.article}</p></Col>
-                            <Col lg={12}><p>{value.describe}</p></Col>
+                            <Col className="lead" lg={12}><p>{value.describe}</p></Col>
                             <Col>                
                                 <Button  variant="primary">Add cart</Button>
                             </Col>
@@ -91,6 +91,7 @@ class ListCard extends React.Component{
     }
     
     async displayAll(data, endPoint){
+        
         let list = await data.map((value, index) => {
         if(endPoint.category === (undefined || "all")){
             return this.CardProduct(value, index);    
@@ -159,8 +160,8 @@ class ListCard extends React.Component{
 
     async addCart(value){
         let arrayCart = await this.props.cart;
-        console.log(arrayCart)
-        arrayCart.push({_id: value._id, article: value.article, price: value.price, quantity: 0});
+        
+        arrayCart.push({_id: value._id, article: value.article, price: value.price, quantity: 0, photo: value.photo});
 
         this.props.actions(this.checkIfExist(arrayCart))
     }

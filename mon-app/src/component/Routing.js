@@ -10,7 +10,6 @@ class Routing extends React.Component{
     routeToComponent(){
         
         const params = this.props.match.params;
-        console.log(params)
         if(params.type === "filter" ){
             return <Accueil params={params}/>         
         }
