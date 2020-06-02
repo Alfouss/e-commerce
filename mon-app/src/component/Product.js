@@ -58,8 +58,10 @@ class Product extends React.Component{
     //update article in the service who will comunnicate with nodejs
     async updateListArticle(){
         let listUpdate = await this.state.data.map((value, index) => {
-        
+            value.photo = value.photo === undefined  ? "": value.photo;
+
             return(
+                
                 <tr key={index}>
                     <td>
                         <form onSubmit={this.updateProduct}>
@@ -69,7 +71,7 @@ class Product extends React.Component{
                             <label>price: <input name="price" type="number" placeholder={value.price} defaultValue={value.price}/></label>
                             <label>quantity: <input name="quantity" type="number" placeholder={value.quantity} defaultValue={value.quantity}/></label>
                             <label>photo: 
-                                { value.photo !== null || undefined || "" ?
+                                { value.photo !== "" ?
                                     <input name="photo" type="text" defaultValue={value.photo}/>
                                 :
                                     <input name="photo" type="file"/>
@@ -90,7 +92,6 @@ class Product extends React.Component{
 
     //updated article in real-time with wich we get the array
     async updateProduct(e){
-        serviceProduct.updateProduct(e);
         let tab = [e.target.id.value]
         for(var i = 0; i < this.state.data.length;i++){
             var obj = this.state.data[i];
@@ -143,7 +144,7 @@ class Product extends React.Component{
                         <Form.Label>Quantity</Form.Label>
                         <Form.Control type="text" name="quantity" placeholder="Enter quantity" />
                         <Form.Label>Photo</Form.Label>
-                        <Form.Control type="file" name="photo" placeholder="Enter Photo" />
+                        <Form.Control type="file" name="photo" placeholder="Enter Photo" defaultValue="" />
                         <Form.Label>Category</Form.Label>
                         <Form.Control type="text" name="category" placeholder="Enter category" />
                     </Form.Group>

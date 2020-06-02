@@ -8,7 +8,6 @@ import { withRouter } from 'react-router-dom'
 class Admin extends React.Component{
     constructor(props){
         super(props);
-        console.log(this.props.test)
         this.state = {
             buttonModify: false // for choice the type of panel user or product
         }
