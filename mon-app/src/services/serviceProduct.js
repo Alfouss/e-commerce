@@ -19,7 +19,7 @@ export const pictureGet = (e) => {
         let nameImg = path.split('\\');
 
         // if input not change
-        if(nameImg.length === 1){
+        if(nameImg.length === 1 && nameImg[0] !== ""){
             
             return nameImg[0];
         }

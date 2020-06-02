@@ -21,7 +21,7 @@ class User extends React.Component{
 
     async componentDidMount(){
         let users = await this.props.users;
-        this.setState({datas:users});
+        this.setState({datas:users.data});
         this.listUser();
     }
 

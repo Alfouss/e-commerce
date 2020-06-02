@@ -133,7 +133,12 @@ class Register extends React.Component {
                     <Link to="/"><Button>Accueil</Button></Link>
                 </Col>
             }
-            
+            {this.state.page === "signin" && localStorage.getItem("user") !== null && 
+                this.props.history.push("/")
+            }
+            {this.state.page === "register" && localStorage.getItem("user") !== null && 
+                this.props.history.push("/")
+            }
         </div>)
         
     }
